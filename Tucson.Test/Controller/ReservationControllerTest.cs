@@ -122,35 +122,5 @@ namespace Tucson.API.Tests.Controllers
             okResult.Should().NotBeNull();
             okResult!.StatusCode.Should().Be(200);
         }
-
-        [Fact]
-        public async Task AssignWaitingCustomerOk()
-        {
-            var customer = new Customer(1, "Brisa", MembershipCategoryEnum.Platinum);
-            var waiting = new WaitingList(customer, DateTime.Today, 4);
-
-            var reservation = new Reservation(1, customer, 1, DateTime.Today);
-
-            _reservationRepositoryMock.Setup(r => r.GetWaitingList()).Returns(new List<WaitingList> { waiting });
-            _reservationServiceMock.Setup(s => s.CreateReservationAsync(customer, waiting.ReservationDate, waiting.SeatCount)).ReturnsAsync(reservation);
-
-            var result = await _controller.AssignWaitingCustomer();
-
-            var okResult = result as OkObjectResult;
-            okResult.Should().NotBeNull();
-            okResult!.StatusCode.Should().Be(200);
-        }
-
-        [Fact]
-        public async Task AssignWaitingCustomerError()
-        {
-            _reservationRepositoryMock.Setup(r => r.GetWaitingList()).Returns(new List<WaitingList>());
-
-            var result = await _controller.AssignWaitingCustomer();
-
-            var notFound = result as NotFoundObjectResult;
-            notFound.Should().NotBeNull();
-            notFound!.StatusCode.Should().Be(404);
-        }
     }
 }

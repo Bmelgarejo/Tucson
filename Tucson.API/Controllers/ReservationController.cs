@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using Tucson.Application.Dto;
 using Tucson.Application.Service.Interface;
 using Tucson.Domain.Interfaces;
@@ -18,6 +19,10 @@ namespace Tucson.API.Controllers
             _reservationRepository = reservationRepository;
         }
 
+        /// <summary>
+        /// Obtiene todas las reservas existentes.
+        /// </summary>
+        /// <returns>Lista de reservas.</returns>
         [HttpGet("reservations")]
         public IActionResult GetReservations()
         {
@@ -32,6 +37,11 @@ namespace Tucson.API.Controllers
             return Ok(reservations);
         }
 
+        /// <summary>
+        /// Elimina una reserva específica.
+        /// </summary>
+        /// <param name="reservationId">ID de la reserva a eliminar.</param>
+        /// <returns>Resultado de la operación.</returns>
         [HttpDelete("reservations/{reservationId}")]
         public async Task<IActionResult> DeleteReservation(int reservationId)
         {
@@ -46,6 +56,11 @@ namespace Tucson.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Crea una nueva reserva.
+        /// </summary>
+        /// <param name="request">Datos de la solicitud de reserva.</param>
+        /// <returns>Información de la mesa asignada.</returns>
         [HttpPost("create-reservation")]
         public async Task<IActionResult> CreateReservation([FromBody] ReservationRequestDto request)
         {
@@ -66,6 +81,10 @@ namespace Tucson.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Obtiene la lista de clientes en espera
+        /// </summary>
+        /// <returns>Lista de clientes en espera.</returns>
         [HttpGet("waiting-list")]
         public IActionResult GetWaitingList()
         {
@@ -80,6 +99,5 @@ namespace Tucson.API.Controllers
 
             return Ok(waitingList);
         }
-
     }
 }

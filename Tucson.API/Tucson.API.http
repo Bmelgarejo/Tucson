@@ -1,0 +1,5 @@
+@Tucson_API_HostAddress = http://localhost:5140
+
+### Obtener todas las reservas
+GET {{Tucson_API_HostAddress}}/api/reservation
+Accept: application/json
